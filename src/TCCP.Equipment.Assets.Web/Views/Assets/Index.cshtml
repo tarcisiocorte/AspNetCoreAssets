@@ -1,0 +1,10 @@
+@model IEnumerable<AssetViewModel>
+
+<ul>
+    @foreach (var equipment in Model)
+    {
+        <li>@equipment.Name <a asp-controller="Assets" asp-action="Details" asp-route-id="@equipment.Id">Edit</a></li>
+    }
+</ul>
+
+<a asp-controller="Assets" asp-action="Create">Create</a>
