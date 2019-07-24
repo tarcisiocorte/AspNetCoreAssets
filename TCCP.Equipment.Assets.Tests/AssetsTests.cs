@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using TCCP.Equipment.Assets.Business.Impl.Services;
+using TCCP.Equipment.Assets.Business.Models;
 
 namespace Tests
 {
@@ -16,7 +17,26 @@ namespace Tests
         {
             DataInMemoryAssetsService dataMemory = new DataInMemoryAssetsService();
             var result = dataMemory.GetAll();
-            Assert.Equals(result.Count, 1);
+            Assert.AreEqual(result.Count, 0);
+        }
+
+        [Test]
+        public void Get_Asset_Record_By_Id()
+        {
+            DataInMemoryAssetsService dataMemory = new DataInMemoryAssetsService();
+            dataMemory.Add(new Asset() {Id = 1, Name = "Base Unit"});
+            var result = dataMemory.GetById(1);
+            Assert.AreEqual(result.Id, 1);
+            Assert.AreEqual(result.Name, "Base Unit");
+        }
+
+        [Test]
+        public void Asset_Record_Id_DoesNot_Exists()
+        {
+            DataInMemoryAssetsService dataMemory = new DataInMemoryAssetsService();
+            dataMemory.Add(new Asset() { Id = 1, Name = "Base Unit" });
+            var result = dataMemory.GetById(50);
+            Assert.IsNull(result);
         }
     }
 }
